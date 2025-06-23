@@ -1,8 +1,9 @@
 package memo.domain;
 
-import java.util.UUID;
 import lombok.NonNull;
+
 import java.time.Instant;
+import java.util.UUID;
 
 public class Memo {
     private UUID id;
