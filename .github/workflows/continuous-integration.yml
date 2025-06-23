@@ -13,6 +13,6 @@ jobs:
           distribution: "microsoft"
           java-version: "21"
           cache: "gradle"
-      - run: ./gradlew check
-      - run: ./gradlew test
-      - run: ./gradlew build
+      - run: gradle check
+      - run: gradle test
+      - run: gradle build
