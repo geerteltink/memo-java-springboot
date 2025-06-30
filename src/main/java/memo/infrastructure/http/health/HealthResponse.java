@@ -1,4 +1,4 @@
-package memo.infrastructure.http;
+package memo.infrastructure.http.health;
 
 import org.springframework.http.HttpStatus;
 

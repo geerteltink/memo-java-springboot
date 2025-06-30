@@ -2,6 +2,6 @@ package memo.infrastructure.http;
 
 import org.springframework.http.HttpStatus;
 
-public record RootResponse(String serviceName, HttpStatus status) {
+public record RootResponse(String ack, HttpStatus status) {
 
 }
