@@ -5,8 +5,10 @@ import memo.domain.MemoNotFound;
 import org.junit.jupiter.api.Test;
 
 import java.time.Instant;
+import java.util.List;
 import java.util.UUID;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNotSame;
@@ -33,7 +35,7 @@ public class InMemoryMemoRepositoryTest {
     }
 
     @Test
-    void testUpdate() {
+    void itCanUpdateMemos() {
         UUID id = UUID.randomUUID();
         Memo memo = Memo.create(id, "Test Memo");
 
@@ -87,5 +89,20 @@ public class InMemoryMemoRepositoryTest {
         InMemoryMemoRepository repository = new InMemoryMemoRepository();
 
         assertThrows(MemoNotFound.class, () -> repository.findById(id));
+    }
+
+    @Test
+    void itReturnsListsOfMemos() {
+        UUID id = UUID.randomUUID();
+        Memo memo1 = Memo.create(null, "Test Memo 1");
+        Memo memo2 = Memo.create(null, "Test Memo 2");
+
+        InMemoryMemoRepository repository = new InMemoryMemoRepository();
+        repository.insert(memo1);
+        repository.insert(memo2);
+
+        List<Memo> list = repository.find();
+
+        assertEquals(2, list.size());
     }
 }

@@ -57,4 +57,18 @@ public class FindMemoHandlerTest {
 
         verify(repository, times(1)).findById(id);
     }
+
+    @Test
+    void itThrowsAnExceptionIfMemoIsDeleted() {
+        UUID id = UUID.randomUUID();
+        Memo memo = Memo.create(id, "# Title\nContent.");
+        memo.delete(null);
+        FindMemoQuery query = new FindMemoQuery(id);
+
+        when(repository.findById(id)).thenReturn(memo);
+
+        assertThrows(MemoNotFound.class, () -> handler.handle(query));
+
+        verify(repository, times(1)).findById(id);
+    }
 }

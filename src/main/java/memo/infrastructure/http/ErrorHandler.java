@@ -8,6 +8,7 @@ import memo.domain.MemoNotFound;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
@@ -31,6 +32,13 @@ public class ErrorHandler {
 
     @ExceptionHandler(MemoFound.class)
     public ProblemDetail handle(MemoFound e) {
+        logError(e);
+
+        return ProblemDetailsFactory.create(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(HttpMessageNotReadableException.class)
+    public ProblemDetail handle(HttpMessageNotReadableException e) {
         logError(e);
 
         return ProblemDetailsFactory.create(HttpStatus.BAD_REQUEST, e.getMessage());
