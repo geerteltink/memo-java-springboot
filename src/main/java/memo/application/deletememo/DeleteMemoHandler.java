@@ -2,13 +2,13 @@ package memo.application.deletememo;
 
 import lombok.RequiredArgsConstructor;
 import memo.domain.Memo;
-import memo.infrastructure.persistence.InMemoryMemoRepository;
+import memo.domain.MemoRepository;
 import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
 public class DeleteMemoHandler {
-    private final InMemoryMemoRepository repository;
+    private final MemoRepository repository;
 
     public void handle(DeleteMemoCommand command) {
         Memo memo = this.repository.find(command.id());
