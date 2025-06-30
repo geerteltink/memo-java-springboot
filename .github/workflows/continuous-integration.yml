@@ -13,6 +13,7 @@ jobs:
           distribution: "zulu"
           java-version: "21"
           cache: "gradle"
-      - run: gradle --no-daemon --parallel check
+
       - run: gradle --no-daemon --parallel test
+      - run: gradle --no-daemon --parallel check
       - run: gradle --no-daemon --parallel build
