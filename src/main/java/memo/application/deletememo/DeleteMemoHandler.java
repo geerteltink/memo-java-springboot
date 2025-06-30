@@ -11,7 +11,7 @@ public class DeleteMemoHandler {
     private final MemoRepository repository;
 
     public void handle(DeleteMemoCommand command) {
-        Memo memo = this.repository.find(command.id());
+        Memo memo = this.repository.findById(command.id());
 
         memo.delete(null);
 

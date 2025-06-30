@@ -36,11 +36,11 @@ public class FindMemoHandlerTest {
         Memo memo = Memo.create(id, "# Title\nContent.");
         FindMemoQuery query = new FindMemoQuery(id);
 
-        when(repository.find(id)).thenReturn(memo);
+        when(repository.findById(id)).thenReturn(memo);
 
         MemoResponse response = handler.handle(query);
 
-        verify(repository, times(1)).find(id);
+        verify(repository, times(1)).findById(id);
         assertEquals(id, response.id());
         assertEquals("Title", response.title());
         assertEquals("# Title\nContent.", response.content());
@@ -51,10 +51,10 @@ public class FindMemoHandlerTest {
         UUID id = UUID.randomUUID();
         FindMemoQuery query = new FindMemoQuery(id);
 
-        when(repository.find(id)).thenThrow(MemoNotFound.class);
+        when(repository.findById(id)).thenThrow(MemoNotFound.class);
 
         assertThrows(MemoNotFound.class, () -> handler.handle(query));
 
-        verify(repository, times(1)).find(id);
+        verify(repository, times(1)).findById(id);
     }
 }

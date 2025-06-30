@@ -14,7 +14,7 @@ public class UpdateMemoHandler {
     private final MemoRepository repository;
 
     public MemoResponse handle(UpdateMemoCommand command) {
-        Memo memo = this.repository.find(command.id());
+        Memo memo = this.repository.findById(command.id());
         memo.update(command.content(), Instant.now());
 
         this.repository.update(memo);

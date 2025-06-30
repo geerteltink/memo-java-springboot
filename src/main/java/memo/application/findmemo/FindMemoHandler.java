@@ -13,7 +13,7 @@ public class FindMemoHandler {
     private final MemoRepository repository;
 
     public MemoResponse handle(FindMemoQuery query) {
-        Memo memo = this.repository.find(query.id());
+        Memo memo = this.repository.findById(query.id());
 
         if (memo.deleted() != null) {
             throw new MemoNotFound(query.id());

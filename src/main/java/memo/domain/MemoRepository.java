@@ -1,5 +1,6 @@
 package memo.domain;
 
+import java.util.List;
 import java.util.UUID;
 
 public interface MemoRepository {
@@ -12,5 +13,7 @@ public interface MemoRepository {
     /**
      * @throws Memofound if no memo is found for the given ID
      */
-    public Memo find(UUID id);
+    public Memo findById(UUID id);
+
+    public List<Memo> find();
 }

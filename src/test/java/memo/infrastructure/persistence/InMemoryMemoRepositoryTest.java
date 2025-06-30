@@ -23,7 +23,7 @@ public class InMemoryMemoRepositoryTest {
         InMemoryMemoRepository repository = new InMemoryMemoRepository();
         repository.insert(memo);
 
-        Memo foundMemo = repository.find(id);
+        Memo foundMemo = repository.findById(id);
         assertNotNull(foundMemo);
         assertNotNull(foundMemo.id());
         assertNotNull(foundMemo.content());
@@ -40,12 +40,12 @@ public class InMemoryMemoRepositoryTest {
         InMemoryMemoRepository repository = new InMemoryMemoRepository();
         repository.insert(memo);
 
-        Memo foundMemo = repository.find(id);
+        Memo foundMemo = repository.findById(id);
         Memo clonedMemo = new Memo(foundMemo.id(), foundMemo.content(), foundMemo.created(), foundMemo.modified());
         clonedMemo.update("Updated Memo", Instant.now());
         repository.update(clonedMemo);
 
-        Memo updatedMemo = repository.find(id);
+        Memo updatedMemo = repository.findById(id);
 
         assertSame(memo.id(), updatedMemo.id());
         assertSame(memo.created(), updatedMemo.created());
@@ -64,7 +64,7 @@ public class InMemoryMemoRepositoryTest {
         repository.insert(memo);
         repository.delete(memo);
 
-        assertThrows(MemoNotFound.class, () -> repository.find(id));
+        assertThrows(MemoNotFound.class, () -> repository.findById(id));
     }
 
     @Test
@@ -75,7 +75,7 @@ public class InMemoryMemoRepositoryTest {
         InMemoryMemoRepository repository = new InMemoryMemoRepository();
         repository.insert(memo);
 
-        Memo foundMemo = repository.find(id);
+        Memo foundMemo = repository.findById(id);
 
         assertSame(memo, foundMemo);
     }
@@ -86,6 +86,6 @@ public class InMemoryMemoRepositoryTest {
 
         InMemoryMemoRepository repository = new InMemoryMemoRepository();
 
-        assertThrows(MemoNotFound.class, () -> repository.find(id));
+        assertThrows(MemoNotFound.class, () -> repository.findById(id));
     }
 }

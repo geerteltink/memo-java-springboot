@@ -14,9 +14,10 @@ public class FindMemosHandler {
     private final MemoRepository repository;
 
     public List<MemoResponse> handle(FindMemosQuery query) {
-        return List.of(
-                MemoResponse.from(Memo.create(null, "Sample Memo 1")),
-                MemoResponse.from(Memo.create(null, "Sample Memo 2")));
-    }
+        List<Memo> memos = repository.find();
 
+        return memos.stream()
+                .map(MemoResponse::from)
+                .toList();
+    }
 }

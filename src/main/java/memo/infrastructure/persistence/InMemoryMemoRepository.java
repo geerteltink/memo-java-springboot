@@ -8,6 +8,7 @@ import memo.domain.MemoRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.UUID;
 
@@ -40,12 +41,19 @@ public class InMemoryMemoRepository implements MemoRepository {
     }
 
     @Override
-    public Memo find(UUID id) {
+    public Memo findById(UUID id) {
         Memo memo = this.memos.get(id);
         if (memo == null) {
             throw new MemoNotFound(id);
         }
 
         return memo;
+    }
+
+    @Override
+    public List<Memo> find() {
+        return this.memos.values().stream()
+                .filter(memo -> memo.deleted() == null)
+                .toList();
     }
 }

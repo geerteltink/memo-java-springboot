@@ -35,11 +35,11 @@ public class DeleteMemoHandlerTest {
         Memo memo = Memo.create(id, "");
         DeleteMemoCommand command = new DeleteMemoCommand(id);
 
-        when(repository.find(id)).thenReturn(memo);
+        when(repository.findById(id)).thenReturn(memo);
 
         handler.handle(command);
 
-        verify(repository, times(1)).find(id);
+        verify(repository, times(1)).findById(id);
         verify(repository, times(1)).update(any(Memo.class));
     }
 
@@ -48,11 +48,11 @@ public class DeleteMemoHandlerTest {
         UUID id = UUID.randomUUID();
         DeleteMemoCommand command = new DeleteMemoCommand(id);
 
-        when(repository.find(id)).thenThrow(MemoNotFound.class);
+        when(repository.findById(id)).thenThrow(MemoNotFound.class);
 
         assertThrows(MemoNotFound.class, () -> handler.handle(command));
 
-        verify(repository, times(1)).find(id);
+        verify(repository, times(1)).findById(id);
         verify(repository, times(0)).update(any(Memo.class));
     }
 }
