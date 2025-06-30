@@ -3,6 +3,8 @@ package memo.infrastructure.http;
 import jakarta.validation.ConstraintViolation;
 import jakarta.validation.ConstraintViolationException;
 import lombok.extern.slf4j.Slf4j;
+import memo.domain.MemoFound;
+import memo.domain.MemoNotFound;
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ProblemDetail;
@@ -19,6 +21,31 @@ import java.util.Set;
 @Slf4j
 public class ErrorHandler {
     private static final String INTERNAL_ERROR_MESSAGE = "Internal Server Error";
+
+    @ExceptionHandler(MemoNotFound.class)
+    public ProblemDetail handle(MemoNotFound e) {
+        logError(e);
+
+        return ProblemDetailsFactory.create(HttpStatus.NOT_FOUND, e.getMessage());
+    }
+
+    @ExceptionHandler(MemoFound.class)
+    public ProblemDetail handle(MemoFound e) {
+        logError(e);
+
+        return ProblemDetailsFactory.create(HttpStatus.BAD_REQUEST, e.getMessage());
+    }
+
+    @ExceptionHandler(ConstraintViolationException.class)
+    public ProblemDetail handle(ConstraintViolationException e) {
+        logError(e);
+
+        ProblemDetail problemDetail = ProblemDetailsFactory.create(HttpStatus.BAD_REQUEST, e.getMessage());
+        List<ErrorRecord> errors = formatFieldErrors(e.getConstraintViolations());
+        problemDetail.setProperty("errors", errors);
+
+        return problemDetail;
+    }
 
     @ExceptionHandler(NoResourceFoundException.class)
     public ProblemDetail handle(NoResourceFoundException e) {
@@ -38,18 +65,7 @@ public class ErrorHandler {
     public ProblemDetail handle(HttpRequestMethodNotSupportedException e) {
         logError(e);
 
-        return ProblemDetailsFactory.create(HttpStatus.BAD_REQUEST, e.getMessage());
-    }
-
-    @ExceptionHandler(ConstraintViolationException.class)
-    public ProblemDetail handle(ConstraintViolationException e) {
-        logError(e);
-
-        ProblemDetail problemDetail = ProblemDetailsFactory.create(HttpStatus.BAD_REQUEST, e.getMessage());
-        List<ErrorRecord> errors = formatFieldErrors(e.getConstraintViolations());
-        problemDetail.setProperty("errors", errors);
-
-        return problemDetail;
+        return ProblemDetailsFactory.create(HttpStatus.METHOD_NOT_ALLOWED, e.getMessage());
     }
 
     @ExceptionHandler(RuntimeException.class)
