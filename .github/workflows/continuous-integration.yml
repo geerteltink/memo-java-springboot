@@ -10,9 +10,9 @@ jobs:
       - uses: actions/checkout@v4
       - uses: actions/setup-java@v4
         with:
-          distribution: "microsoft"
+          distribution: "zulu"
           java-version: "21"
           cache: "gradle"
-      - run: gradle check
-      - run: gradle test
-      - run: gradle build
+      - run: gradle --no-daemon --parallel check
+      - run: gradle --no-daemon --parallel test
+      - run: gradle --no-daemon --parallel build
