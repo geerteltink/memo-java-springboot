@@ -1,5 +1,9 @@
 package memo.infrastructure.http.memos;
 
-public record CreateMemoRequest(String content) {
+import lombok.NonNull;
+
+import java.util.UUID;
+
+public record CreateMemoRequest(UUID id, @NonNull String content) {
 
 }

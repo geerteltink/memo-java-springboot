@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 public class CreateMemoHandler {
 
     public MemoResponse handle(CreateMemoCommand command) {
-        Memo memo = Memo.create(command.content());
+        Memo memo = Memo.create(command.id(), command.content());
 
         return MemoResponse.from(memo);
     }

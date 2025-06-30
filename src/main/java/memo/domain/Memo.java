@@ -21,8 +21,10 @@ public class Memo {
         this.modified = modified != null ? modified : Instant.now();
     }
 
-    public static Memo create(@NonNull String content) {
-        return new Memo(UUID.randomUUID(), content, Instant.now(), Instant.now());
+    public static Memo create(UUID id, @NonNull String content) {
+        UUID memoId = (id != null) ? id : UUID.randomUUID();
+
+        return new Memo(memoId, content, Instant.now(), Instant.now());
     }
 
     public void update(@NonNull String content, Instant modified) {

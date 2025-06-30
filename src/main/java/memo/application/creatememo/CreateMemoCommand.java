@@ -1,5 +1,9 @@
 package memo.application.creatememo;
 
-public record CreateMemoCommand(String content) {
+import lombok.NonNull;
+
+import java.util.UUID;
+
+public record CreateMemoCommand(UUID id, @NonNull String content) {
 
 }

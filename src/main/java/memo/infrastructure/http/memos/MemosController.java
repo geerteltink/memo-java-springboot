@@ -50,7 +50,7 @@ public class MemosController {
 
     @PostMapping
     public ResponseEntity<MemoResponse> createMemo(@RequestBody CreateMemoRequest request) {
-        MemoResponse response = createMemoHandler.handle(new CreateMemoCommand(request.content()));
+        MemoResponse response = createMemoHandler.handle(new CreateMemoCommand(request.id(), request.content()));
 
         return ResponseEntity.ok(response);
     }

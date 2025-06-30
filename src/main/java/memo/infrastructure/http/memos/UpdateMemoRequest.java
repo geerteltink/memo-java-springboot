@@ -1,5 +1,7 @@
 package memo.infrastructure.http.memos;
 
-public record UpdateMemoRequest(String content) {
+import io.micrometer.common.lang.NonNull;
+
+public record UpdateMemoRequest(@NonNull String content) {
 
 }
